@@ -1,0 +1,23 @@
+gaps_dev:
+  image: gaps_dev:latest
+  container_name: gaps_dev
+#  environment:
+#    - PGID=${PGID}
+#    - PUID=${PUID}
+#    - TZ=${TZ}
+  ports:
+    - 8484:8484
+  restart: unless-stopped
+  expose:
+    - "32400"
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+
+###  Command to rebuild local development docker image. ###
+
+#  mvn clean install && ./minify && \
+#  sudo docker build --no-cache -f Dockerfile.debug -t gaps_dev . && \
+#  sudo docker-compose -f docker-compose-dev.yaml up -d
+
+### Suggest mapping development dirs to the container instead of the copy commands in the dockerfile.debug.
+### If jars are mounted in the container instead, code changes would not require a rebuild of the container.
