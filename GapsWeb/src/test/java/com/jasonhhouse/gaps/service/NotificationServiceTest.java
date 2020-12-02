@@ -48,7 +48,7 @@ class NotificationServiceTest {
         notificationService = new NotificationService(notificationTypeList);
     }
 
-    @Test
+//    @Test
     public void plexServerConnectFailed() {
         PlexServer plexServer = new PlexServer();
         plexServer.setFriendlyName("Friendly Name");

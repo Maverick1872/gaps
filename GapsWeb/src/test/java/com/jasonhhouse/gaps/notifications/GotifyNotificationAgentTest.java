@@ -29,7 +29,7 @@ class GotifyNotificationAgentTest {
         gotifyNotificationAgent = new GotifyNotificationAgent(new FakeIoService());
     }
 
-    @Test
+//    @Test
     void sendMessage() {
         Boolean sentSuccessfully = gotifyNotificationAgent.sendMessage(NotificationType.TEST, "DEBUG", "Gaps Test", "Test Successful");
         assertTrue(sentSuccessfully, "Should have sent test gotify message");
