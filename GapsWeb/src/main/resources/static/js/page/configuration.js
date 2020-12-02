@@ -277,6 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Exposing function for onClick()
+  window.testOmdbApiKey = testTmdbKey;
+  window.saveOmdbApiKey = testTmdbKey;
   window.testTmdbKey = testTmdbKey;
   window.saveTmdbKey = saveTmdbKey;
   window.testPlexServer = testPlexServer;

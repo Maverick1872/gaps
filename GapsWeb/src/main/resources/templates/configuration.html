@@ -78,7 +78,10 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#tmdb" id="tmdbTab">TMDB</a>
+            <a class="nav-link active" data-toggle="tab" href="#omdb" id="omdbTab">OMDB Config</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#tmdb" id="tmdbTab">TMDB Config</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#plex" id="plexTab">Plex</a>
@@ -102,7 +105,59 @@
         </li>
     </ul>
     <div class="tab-content top-margin" id="myTabContent">
-        <div class="tab-pane fade show active top-margin" id="tmdb">
+        <!-- OMDb Settings Tab -->
+        <div class="tab-pane fade show active top-margin" id="omdb">
+            <p>To successfully use Gaps with OMDb you will need to have an active API key. Navigate over to the <a
+                    href="http://www.omdbapi.com/apikey.aspx" rel="noopener noreferrer" target="_blank">OMDb API</a> to
+                generate an API Key. Copy that key and paste it below.</p>
+
+            <form class="needs-validation" id="omdbConfiguration" novalidate th:object="${plexProperties}">
+                <div class="form-group">
+                    <label for="omdbApiKey">OMDb Api Key</label>
+                    <div class="input-group">
+                        <input class="form-control" id="omdbApiKey" data-cy="omdbApiKey" required th:field="*{movieDbApiKey}" type="text">
+                        <div class="invalid-feedback" id="emptyOmdbApiKeyLabel">
+                            Please enter an OMDb Api Key.
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-info" href="javascript:void(0)" id="testOmdbApiKey" onclick="testOmdbApiKey();"
+                   type="button">Test</a>
+                <a class="btn btn-primary" href="javascript:void(0)" id="saveOmdbApiKey" onclick="saveOmdbApiKey();"
+                   type="button">Save</a>
+            </form>
+
+            <div class="spinner-border text-primary gaps-hide top-margin" id="omdbSpinner" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+
+            <div class="alert alert-dismissible alert-danger gaps-hide top-margin" id="omdbTestError">
+                <button class="close" data-hide="alert" type="button">&times;</button>
+                <h4 class="alert-heading">Error!</h4>
+                <p class="mb-0">Could not connect to the OMDb API. Check the key and application logs and please try again.</p>
+            </div>
+
+            <div class="alert alert-dismissible alert-success gaps-hide top-margin" id="omdbTestSuccess">
+                <button class="close" data-hide="alert" type="button">&times;</button>
+                <h4 class="alert-heading">Success!</h4>
+                <p class="mb-0">Your OMDb API key is valid.</p>
+            </div>
+
+            <div class="alert alert-dismissible alert-danger gaps-hide top-margin" id="omdbSaveError">
+                <button class="close" data-hide="alert" type="button">&times;</button>
+                <h4 class="alert-heading">Error!</h4>
+                <p class="mb-0">Could not save your OMDb API key. Check the application logs and please try again.</p>
+            </div>
+
+            <div class="alert alert-dismissible alert-success gaps-hide top-margin" id="omdbSaveSuccess">
+                <button class="close" data-hide="alert" type="button">&times;</button>
+                <h4 class="alert-heading">Success!</h4>
+                <p class="mb-0">Your OMDb API key was saved successfully.</p>
+            </div>
+        </div>
+
+        <!-- The MovieDB Settings Tab -->
+        <div class="tab-pane fade top-margin" id="tmdb">
             <p>To use Gaps, you'll need a MovieDB api key. Navigate over to <a
                     href="https://www.themoviedb.org/settings/api" rel="noopener noreferrer" target="_blank">The Movie DB</a>,
                 create an account, and make an API Key. Copy that key and paste it below.</p>
@@ -151,6 +206,8 @@
                 <p class="mb-0">Your MovieDB key saved successfully.</p>
             </div>
         </div>
+
+        <!-- Plex Settings Tab -->
         <div class="tab-pane fade top-margin" id="plex">
             <form class="needs-validation" id="plexConfiguration" novalidate>
                 <div class="form-group">
@@ -275,6 +332,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Schedule Settings Tab -->
         <div class="tab-pane fade top-margin" id="schedule">
             <p>Gaps can be set to automatically run. This is through a cron job that will search for new Plex Libraries
                 on each configured server, then search for all movies in each library, and produce a missing movie
@@ -319,6 +378,8 @@
             </div>
 
         </div>
+
+        <!-- Notifications Settings Tab -->
         <div class="tab-pane fade top-margin" id="notification">
             <div th:insert="fragments/notifications :: discord"></div>
             <hr class="thin">
@@ -334,9 +395,13 @@
             <hr class="thin">
             <div th:insert="fragments/notifications :: telegram"></div>
         </div>
+
+        <!-- Folder Settings Tab -->
         <div class="tab-pane fade top-margin" id="folders">
             <p>folders</p>
         </div>
+
+        <!-- Network Settings Tab -->
         <div class="tab-pane fade top-margin" id="network">
 
             <form class="needs-validation" id="networkConfiguration" novalidate>
@@ -386,6 +451,8 @@
 
             </form>
         </div>
+
+        <!-- Advanced Settings Tab -->
         <div class="tab-pane fade top-margin" id="advanced">
 
             <form class="needs-validation" id="advancedConfiguration" novalidate>
